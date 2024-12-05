@@ -1,17 +1,28 @@
 import "dotenv/config";
 import supportRequests from "./support_requests.json";
-import { generateText } from "ai";
+import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
+import { z } from "zod";
 
 async function main() {
-  console.log(supportRequests.slice(0, 2));
-  const result = await generateText({
+  const result = await generateObject({
     model: openai("gpt-4o-mini"),
     prompt:
-      "Classify the following support requests. The categories are (billing, product issues, enterprise sales, account issues, product feedback).\n\n" +
+      "Classify the following support requests.\n\n" +
       JSON.stringify(supportRequests),
+    schema: z.object({
+      request: z.string(),
+      category: z.enum([
+        "billing",
+        "product issues",
+        "enterprise sales",
+        "account issues",
+        "product_feedback",
+      ]),
+    }),
+    output: "array",
   });
-  console.log(result.text);
+  console.log(result.object);
 }
 
 main().catch(console.error);
