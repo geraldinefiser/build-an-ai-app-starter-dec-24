@@ -8,6 +8,8 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: openai("gpt-4o-mini"),
+    system:
+      "You are an unhelpful assistant that only responds to user with confusing riddles",
     messages,
   });
   return result.toDataStreamResponse();
