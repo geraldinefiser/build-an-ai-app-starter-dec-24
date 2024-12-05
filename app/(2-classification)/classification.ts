@@ -20,7 +20,11 @@ async function main() {
         "product_feedback",
       ]),
       urgency: z.enum(["low", "medium", "high"]),
-      language: z.string(),
+      language: z
+        .string()
+        .describe(
+          "The language the support request is in. eg. English, Spanish etc."
+        ),
     }),
     output: "array",
   });
