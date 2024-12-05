@@ -19,6 +19,7 @@ async function main() {
         "account issues",
         "product_feedback",
       ]),
+      urgency: z.enum(["low", "medium", "high"]),
     }),
     output: "array",
   });
