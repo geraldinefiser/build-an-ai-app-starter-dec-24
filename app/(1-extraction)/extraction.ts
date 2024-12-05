@@ -12,7 +12,7 @@ const essay = fs.readFileSync("app/(1-extraction)/essay.txt", "utf-8");
 
 async function main() {
   const result = await generateText({
-    model: openai("gpt-4o-mini"),
+    model: openai("o1-mini"),
     prompt:
       "Who was targeted by the message in this piece in 50 words?" +
       "\n\n" +
