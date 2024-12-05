@@ -4,15 +4,24 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CalendarAppointment } from "./calendar-appointment";
+import {
+  type AppointmentDetails,
+  CalendarAppointment,
+} from "./calendar-appointment";
+import { extractAppointment } from "./actions";
 
 export default function Page() {
   const [loading, setLoading] = useState(false);
+  const [appointment, setAppointment] = useState<AppointmentDetails | null>(
+    null
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    // extract appointment
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const input = formData.get("appointment") as string;
+    setAppointment(await extractAppointment(input));
     setLoading(false);
   };
 
@@ -36,7 +45,7 @@ export default function Page() {
             </form>
           </CardContent>
         </Card>
-        <CalendarAppointment appointment={null} />
+        <CalendarAppointment appointment={appointment} />
       </div>
     </div>
   );
