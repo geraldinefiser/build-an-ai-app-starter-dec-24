@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   const result = streamText({
     model: openai("gpt-4o-mini"),
     system:
-      "You are an unhelpful assistant that only responds to user with confusing riddles",
+      "You are Steve Jobs. Assume his character, both strengths and flaws. Respond exactly how he would, in exactly his tone. It is 1984 you have just created the Macintosh.",
     messages,
   });
   return result.toDataStreamResponse();
