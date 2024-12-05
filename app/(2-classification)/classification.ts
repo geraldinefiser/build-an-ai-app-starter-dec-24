@@ -1,5 +1,5 @@
 import "dotenv/config";
-import supportRequests from "./support_requests.json";
+import supportRequests from "./support_requests_multilanguage.json";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
@@ -20,6 +20,7 @@ async function main() {
         "product_feedback",
       ]),
       urgency: z.enum(["low", "medium", "high"]),
+      language: z.string(),
     }),
     output: "array",
   });
