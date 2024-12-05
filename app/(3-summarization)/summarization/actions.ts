@@ -11,10 +11,22 @@ export const generateSummary = async (comments: any[]) => {
     Comments: 
     ${JSON.stringify(comments)}`,
     schema: z.object({
-      headline: z.string(),
-      context: z.string(),
-      discussionPoints: z.string(),
-      takeaways: z.string(),
+      headline: z
+        .string()
+        .describe("The healdine of the summary. Max 5 words."),
+      context: z
+        .string()
+        .describe(
+          "What is the relevant context that prompted the discussion Max 2 sentences."
+        ),
+      discussionPoints: z
+        .string()
+        .describe("What are the key discussion points. Max 2 sentences."),
+      takeaways: z
+        .string()
+        .describe(
+          "What are the key takeaways and/or next steps? Include names. Max 2 sentences."
+        ),
     }),
   });
   return result.object;
