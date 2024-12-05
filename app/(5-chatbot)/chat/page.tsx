@@ -4,6 +4,7 @@ import Weather from "./weather";
 
 export default function Page() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
+    id: "weather",
     maxSteps: 5,
   });
   return (
