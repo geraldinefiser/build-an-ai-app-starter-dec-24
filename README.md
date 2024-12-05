@@ -8,13 +8,17 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, to run files in terminal:
 
 ```bash
+pnpm classification
 pnpm extraction
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result for the following routes:
+
+```bash
 /summarize
 /extraction
 /chat
+```
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
@@ -23,6 +27,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 - AI SDK
 - OpenAi models
 - Zod library
+- AI/react hooks
 
 
 ## Some key takeaways
@@ -36,6 +41,8 @@ Main ways to use ai:
 Objects need a schema, that's where Zod came into play.
 
 Zod descriptions (.describe()) are super usefull to tell the model how the answer should look like or what is the context that it might need to generate a better more specific answer.
+
+Adding a system prompt allows for customizing the "voice" of the model answer. 
 
 
 
