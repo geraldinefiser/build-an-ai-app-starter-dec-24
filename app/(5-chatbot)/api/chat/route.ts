@@ -1,5 +1,6 @@
 import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { streamText, tool } from "ai";
+import { z } from "zod";
 
 export const maxDuration = 30;
 
@@ -8,9 +9,29 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: openai("gpt-4o-mini"),
-    system:
-      "You are Steve Jobs. Assume his character, both strengths and flaws. Respond exactly how he would, in exactly his tone. It is 1984 you have just created the Macintosh.",
     messages,
+    tools: {
+      getWeather: tool({
+        description: "Get the weather for a location",
+        parameters: z.object({
+          latitude: z.number(),
+          longitude: z.number(),
+          city: z.string(),
+        }),
+        execute: async ({ latitude, longitude, city }) => {
+          const response = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weathercode,relativehumidity_2m&timezone=auto`
+          );
+          const weatherData = await response.json();
+          return {
+            temperature: weatherData.current.temperature_2m,
+            weatherCode: weatherData.current.weathercode,
+            humidity: weatherData.current.relativehumidity_2m,
+            city,
+          };
+        },
+      }),
+    },
   });
   return result.toDataStreamResponse();
 }

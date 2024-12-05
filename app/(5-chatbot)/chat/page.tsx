@@ -8,7 +8,11 @@ export default function Page() {
       {messages.map((message) => (
         <div key={message.id} className="whitespace-pre-wrap">
           {message.role === "user" ? "User: " : "AI: "}
-          {message.content}
+          {message.toolInvocations ? (
+            <pre>{JSON.stringify(message.toolInvocations, null, 2)}</pre>
+          ) : (
+            <p>{message.content}</p>
+          )}
         </div>
       ))}
       <form onSubmit={handleSubmit}>
