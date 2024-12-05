@@ -1,5 +1,6 @@
 "use client";
 import { useChat } from "ai/react";
+import Weather from "./weather";
 
 export default function Page() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -10,7 +11,15 @@ export default function Page() {
       {messages.map((message) => (
         <div key={message.id} className="whitespace-pre-wrap">
           {message.role === "user" ? "User: " : "AI: "}
-          <p>{message.content}</p>
+          {message.toolInvocations ? (
+            message.toolInvocations.map((t) =>
+              t.toolName === "getWeather" && t.state === "result" ? (
+                <Weather key={t.toolCallId} weatherData={t.result} />
+              ) : null
+            )
+          ) : (
+            <p>{message.content}</p>
+          )}
         </div>
       ))}
       <form onSubmit={handleSubmit}>
